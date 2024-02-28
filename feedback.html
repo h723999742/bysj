@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jQuery.js"></script>
+    <style>
+      .box {
+        width: 600px;
+        margin: 30px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      textarea {
+        outline: none;
+        padding: 0;
+        margin: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: none;
+        background-color: transparent;
+        font-size: inherit;
+        width: 100%;
+        border: 1px solid #dbdfe6;
+      }
+      .submit {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        background-color: #2080f0;
+        cursor: pointer;
+        width: 80px;
+        border-radius: 10px;
+        margin-top: 60px;
+      }
+    </style>
+  </head>
+  <script>
+    $(document).ready(function () {
+      $(".submit").click(function () {
+        window.alert("反馈成功!");
+        location.href = "./index.html";
+      });
+    });
+  </script>
+  <body>
+    <div class="box">
+      <textarea rows="10" cols="30"></textarea>
+      <div class="submit">提交反馈</div>
+    </div>
+  </body>
+</html>
