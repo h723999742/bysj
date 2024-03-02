@@ -141,6 +141,45 @@
       box-sizing: border-box;
     }
 
+    .leftBox {
+      display: flex;
+      align-items: center;
+      width: 50%;
+    }
+
+    .rightBox {
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
+      cursor: pointer;
+      padding-right: 10px;
+    }
+
+    .rightBox .item {
+      position: relative;
+    }
+
+    .rightBox .item .showBox {
+      position: absolute;
+      width: 200px;
+      height: 500px;
+      background-color: #fff;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+      left: 50%;
+      transform: translateX(-50%);
+      top: 28px;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .showBoxItem {
+      margin-top: 10px;
+      color: #222226;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+    }
+
     .sLeft input {
       width: 250px;
       height: 40px;
@@ -420,9 +459,24 @@
                     `);
         });
       });
+
       // 选取所有按钮中的第一个并进行点击操作
       $(".navItem").first().click();
+      $(".content .item").on("click", function () {
+        var history = localStorage.getItem("history");
+        var list = []
+        if (history) {
+          list = JSON.parse(history)
+        }
+        console.log('history: ', history);
 
+        var listItem = {
+          text: $(this).contents().text().replace(/\s/g, ""),
+          link: $(this).attr("href")
+        }
+        list.unshift(listItem)
+        localStorage.setItem("history", JSON.stringify(list));
+      })
       // 用户反馈
       $(".feedback").click(function () {
         location.href = "./feedback.html";
@@ -457,17 +511,53 @@
         $(".navItem").first().click();
         $(".searchIpt").val("")
       })
+
+      // 记录
+      $(".showBox").hide()
+      $(".rightBox .item").mouseenter(function () {
+        $(".showBox").html("")
+        $(".showBox").show()
+        var history = localStorage.getItem("history");
+        var list = []
+        if (history) {
+          list = JSON.parse(history)
+        }
+
+        $.each(list, function (index, item) {
+          $(".showBox").append(`
+            <a href="${item.link}" target="_blank" class="showBoxItem">${item.text}</a>
+        `)
+        })
+      })
+      $(".rightBox .item").mouseleave(function () {
+        // $(".showBox").hide()
+
+      })
+      $(".showBox").mouseleave(function () {
+        $(".showBox").hide()
+
+      })
     });
   </script>
 </head>
 
 <body>
   <div class="search">
-    <div class="sLeft">
-      <input class="searchIpt" placeholder="请输入搜索内容" type="text">
+    <div class="leftBox">
+      <div class="sLeft">
+        <input class="searchIpt" placeholder="请输入搜索内容" type="text">
+      </div>
+      <div class="sRight">搜索</div>
+      <div class="sRight resetBtn">重置</div>
     </div>
-    <div class="sRight">搜索</div>
-    <div class="sRight resetBtn">重置</div>
+    <div class="rightBox">
+      <div class="item">
+        历史
+        <div class="showBox">
+
+        </div>
+      </div>
+    </div>
   </div>
   <div class="box">
     <div class="left">
